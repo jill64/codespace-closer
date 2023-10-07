@@ -1,0 +1,17 @@
+{
+  "type": "module",
+  "scripts": {
+    "dev": "npx wrangler dev",
+    "build": "npx wrangler deploy --dry-run",
+    "deploy": "npx wrangler deploy",
+    "lint": "npx prettier --check . && npx eslint && tsc",
+    "format": "npx prettier --write ."
+  },
+  "devDependencies": {
+    "@types/node": "20.8.3",
+    "@typescript-eslint/eslint-plugin": "6.7.4",
+    "@typescript-eslint/parser": "6.7.4",
+    "octoflare": "0.2.6",
+    "typescript": "5.2.2"
+  }
+}
