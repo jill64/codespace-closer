@@ -2,14 +2,14 @@ import { octoflare } from 'octoflare'
 
 export default octoflare(async ({ app, payload }) => {
   if (!('pull_request' in payload)) {
-    return new Response(null, {
-      status: 204
+    return new Response('No PullRequest Event', {
+      status: 200
     })
   }
 
-  if (!(payload.action === 'closed')) {
-    return new Response(null, {
-      status: 204
+  if (payload.action !== 'closed') {
+    return new Response('No PR Closed Event', {
+      status: 200
     })
   }
 
