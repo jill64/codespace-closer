@@ -22,9 +22,13 @@ export default octoflare<{
 
   const { repository, pull_request } = payload
 
+  const isOrg = repository.owner.type === 'Organization'
+
   const {
     data: { codespaces }
-  } = await octokit.rest.codespaces.listForAuthenticatedUser()
+  } = await (isOrg
+    ? octokit.rest.codespaces.listInOrganization()
+    : octokit.rest.codespaces.listForAuthenticatedUser())
 
   const matchList = codespaces.filter(
     (space) =>
