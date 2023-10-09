@@ -1,6 +1,8 @@
 import { octoflare } from 'octoflare'
 
-export default octoflare(async ({ app, payload }) => {
+export default octoflare<{
+  JILL64_UAT: string
+}>(async ({ env, app, payload }) => {
   if (!('pull_request' in payload)) {
     return new Response('No PullRequest Event', {
       status: 200
@@ -16,16 +18,12 @@ export default octoflare(async ({ app, payload }) => {
   const { repository, pull_request } = payload
 
   const {
-    data: { id: installation_id }
-  } = await app.octokit.rest.apps.getUserInstallation({
-    username: pull_request.user.login
-  })
-
-  const octokit = await app.getInstallationOctokit(installation_id)
-
-  const {
     data: { codespaces }
-  } = await octokit.rest.codespaces.listForAuthenticatedUser()
+  } = await app.octokit.rest.codespaces.listForAuthenticatedUser({
+    headers: {
+      authorization: `token ${env.JILL64_UAT}`
+    }
+  })
 
   const matchList = codespaces.filter(
     (space) =>
@@ -35,13 +33,14 @@ export default octoflare(async ({ app, payload }) => {
 
   await Promise.all(
     matchList.map((space) =>
-      octokit.rest.codespaces.deleteForAuthenticatedUser({
-        codespace_name: space.name
+      app.octokit.rest.codespaces.deleteForAuthenticatedUser({
+        codespace_name: space.name,
+        headers: {
+          authorization: `token ${env.JILL64_UAT}`
+        }
       })
     )
   )
-
-  await octokit.rest.apps.revokeInstallationAccessToken()
 
   return new Response(null, {
     status: 204
