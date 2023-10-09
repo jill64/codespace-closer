@@ -17,32 +17,46 @@ export default octoflare<{
 
   const { repository, pull_request } = payload
 
-  const {
-    data: { codespaces }
-  } = await app.octokit.rest.codespaces.listForAuthenticatedUser({
-    headers: {
-      authorization: `token ${env.JILL64_UAT}`
-    }
-  })
+  try {
+    const {
+      data: { codespaces }
+    } = await app.octokit.rest.codespaces.listForAuthenticatedUser({
+      headers: {
+        authorization: `token ${env.JILL64_UAT}`
+      }
+    })
 
-  const matchList = codespaces.filter(
-    (space) =>
-      space.repository.full_name === repository.full_name &&
-      space.git_status.ref === pull_request.head.ref
-  )
+    console.log('codespaces', codespaces)
 
-  await Promise.all(
-    matchList.map((space) =>
-      app.octokit.rest.codespaces.deleteForAuthenticatedUser({
-        codespace_name: space.name,
-        headers: {
-          authorization: `token ${env.JILL64_UAT}`
-        }
-      })
+    const matchList = codespaces.filter(
+      (space) =>
+        space.repository.full_name === repository.full_name &&
+        space.git_status.ref === pull_request.head.ref
     )
-  )
 
-  return new Response(null, {
-    status: 204
-  })
+    console.log('matchList', matchList)
+
+    await Promise.all(
+      matchList.map((space) =>
+        app.octokit.rest.codespaces.deleteForAuthenticatedUser({
+          codespace_name: space.name,
+          headers: {
+            authorization: `token ${env.JILL64_UAT}`
+          }
+        })
+      )
+    )
+
+    return new Response(null, {
+      status: 204
+    })
+  } catch (error) {
+    console.error(error)
+    return new Response(
+      error instanceof Error ? error?.message : String(error),
+      {
+        status: 500
+      }
+    )
+  }
 })
