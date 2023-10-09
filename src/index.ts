@@ -22,39 +22,25 @@ export default octoflare<{
 
   const { repository, pull_request } = payload
 
-  try {
-    const {
-      data: { codespaces }
-    } = await octokit.rest.codespaces.listForAuthenticatedUser()
+  const {
+    data: { codespaces }
+  } = await octokit.rest.codespaces.listForAuthenticatedUser()
 
-    console.log('codespaces', codespaces)
+  const matchList = codespaces.filter(
+    (space) =>
+      space.repository.full_name === repository.full_name &&
+      space.git_status.ref === pull_request.head.ref
+  )
 
-    const matchList = codespaces.filter(
-      (space) =>
-        space.repository.full_name === repository.full_name &&
-        space.git_status.ref === pull_request.head.ref
+  await Promise.all(
+    matchList.map((space) =>
+      octokit.rest.codespaces.deleteForAuthenticatedUser({
+        codespace_name: space.name
+      })
     )
+  )
 
-    console.log('matchList', matchList)
-
-    await Promise.all(
-      matchList.map((space) =>
-        octokit.rest.codespaces.deleteForAuthenticatedUser({
-          codespace_name: space.name
-        })
-      )
-    )
-
-    return new Response(null, {
-      status: 204
-    })
-  } catch (error) {
-    console.error(error)
-    return new Response(
-      error instanceof Error ? error?.message : String(error),
-      {
-        status: 500
-      }
-    )
-  }
+  return new Response(null, {
+    status: 204
+  })
 })
