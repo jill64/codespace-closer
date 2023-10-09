@@ -1,8 +1,9 @@
 import { octoflare } from 'octoflare'
+import { Octokit } from 'octoflare/octokit'
 
 export default octoflare<{
   JILL64_UAT: string
-}>(async ({ env, app, payload }) => {
+}>(async ({ env, payload }) => {
   if (!('pull_request' in payload)) {
     return new Response('No PullRequest Event', {
       status: 200
@@ -15,16 +16,16 @@ export default octoflare<{
     })
   }
 
+  const octokit = new Octokit({
+    auth: env.JILL64_UAT
+  })
+
   const { repository, pull_request } = payload
 
   try {
     const {
       data: { codespaces }
-    } = await app.octokit.rest.codespaces.listForAuthenticatedUser({
-      headers: {
-        authorization: `token ${env.JILL64_UAT}`
-      }
-    })
+    } = await octokit.rest.codespaces.listForAuthenticatedUser()
 
     console.log('codespaces', codespaces)
 
@@ -38,11 +39,8 @@ export default octoflare<{
 
     await Promise.all(
       matchList.map((space) =>
-        app.octokit.rest.codespaces.deleteForAuthenticatedUser({
-          codespace_name: space.name,
-          headers: {
-            authorization: `token ${env.JILL64_UAT}`
-          }
+        octokit.rest.codespaces.deleteForAuthenticatedUser({
+          codespace_name: space.name
         })
       )
     )
