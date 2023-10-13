@@ -44,6 +44,8 @@ export default octoflare<{
     )
   )
 
+  await octokit.rest.apps.revokeInstallationAccessToken()
+
   return new Response(null, {
     status: 204
   })
