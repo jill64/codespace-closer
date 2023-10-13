@@ -5,5 +5,3 @@
 # Codespace Closer
 
 Delete Codespace when branch deleted
-
-[GitHub App](https://github.com/apps/codespace-closer)
