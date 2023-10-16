@@ -3,7 +3,7 @@
   "scripts": {
     "build": "npx wrangler deploy --dry-run",
     "deploy": "npx wrangler deploy",
-    "lint": "npx prettier --check . && npx eslint && tsc",
+    "lint": "npx prettier --check . && npx eslint && tsc && npx depcheck",
     "format": "npx prettier --write ."
   },
   "devDependencies": {
