@@ -4,14 +4,8 @@ import { Octokit } from 'octoflare/octokit'
 export default octoflare<{
   GITHUB_UAT: string
 }>(async ({ env, payload }) => {
-  if (!('pull_request' in payload)) {
-    return new Response('No PullRequest Event', {
-      status: 200
-    })
-  }
-
-  if (payload.action !== 'closed') {
-    return new Response('No PR Closed Event', {
+  if (!('ref_type' in payload && payload.ref_type === 'branch')) {
+    return new Response('No Branch Deleted Event', {
       status: 200
     })
   }
@@ -20,7 +14,7 @@ export default octoflare<{
     auth: env.GITHUB_UAT
   })
 
-  const { repository, pull_request } = payload
+  const { repository, ref } = payload
 
   const isOrg = repository.owner.type === 'Organization'
 
@@ -33,7 +27,7 @@ export default octoflare<{
   const matchList = codespaces.filter(
     (space) =>
       space.repository.full_name === repository.full_name &&
-      space.git_status.ref === pull_request.head.ref
+      space.git_status.ref === ref
   )
 
   await Promise.all(
