@@ -44,7 +44,7 @@ export default octoflare<{
     )
   )
 
-  return new Response(null, {
-    status: 204
+  return new Response(`${matchList.length} codespaces closed successful`, {
+    status: 200
   })
 })
