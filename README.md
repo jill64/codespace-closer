@@ -10,6 +10,10 @@ Delete Codespace when branch deleted
 
 [GitHub App](https://github.com/apps/codespace-closer)
 
-## Note
+## Environment Variable
 
-- Required User Access Token by GitHub REST API limitation. This must be set as `GITHUB_UAT` in the Worker environment variable.
+Required UAT by GitHub REST API limitation.
+
+| KEY          | Description                             |
+| ------------ | --------------------------------------- |
+| `GITHUB_UAT` | User Access Token (codespace,write:org) |
