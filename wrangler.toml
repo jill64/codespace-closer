@@ -2,3 +2,9 @@ name = "codespace-closer"
 main = "src/index.ts"
 compatibility_date = "2023-10-02"
 compatibility_flags = ["nodejs_compat"]
+
+[vars]
+
+OCTOFLARE_APP_ID = "402431"
+OCTOFLARE_APP_OWNER = "jill64"
+OCTOFLARE_APP_REPO = "codespace-closer"
