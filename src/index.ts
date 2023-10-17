@@ -2,7 +2,7 @@ import { octoflare } from 'octoflare'
 import { Octokit } from 'octoflare/octokit'
 
 export default octoflare<{
-  JILL64_UAT: string
+  GITHUB_UAT: string
 }>(async ({ env, payload }) => {
   if (!('pull_request' in payload)) {
     return new Response('No PullRequest Event', {
@@ -17,7 +17,7 @@ export default octoflare<{
   }
 
   const octokit = new Octokit({
-    auth: env.JILL64_UAT
+    auth: env.GITHUB_UAT
   })
 
   const { repository, pull_request } = payload
