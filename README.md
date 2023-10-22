@@ -1,7 +1,19 @@
 <!----- BEGIN GHOST DOCS LOGO src="./assets/logo.png" ----->
+
+<div align="center">
+<img src="./assets/logo.png" width="100px" />
+</div>
+
 <!----- END GHOST DOCS LOGO ----->
 
 <!----- BEGIN GHOST DOCS HEADER ----->
+
+# codespace-closer
+
+[![github-app](https://img.shields.io/badge/GitHub_App-codespace--closer-midnightblue)](https://github.com/apps/codespace-closer)[![octoflare](https://img.shields.io/badge/framework-🌤️Octoflare-dodgerblue)](https://github.com/jill64/octoflare)
+
+Delete Codespace when branch deleted
+
 <!----- END GHOST DOCS HEADER ----->
 
 ## Environment Variable
