@@ -21,7 +21,9 @@ export default octoflare<{
   const {
     data: { codespaces }
   } = await (isOrg
-    ? octokit.rest.codespaces.listInOrganization()
+    ? octokit.rest.codespaces.listInOrganization({
+        org: repository.owner.login
+      })
     : octokit.rest.codespaces.listForAuthenticatedUser())
 
   const matchList = codespaces.filter(
@@ -30,13 +32,13 @@ export default octoflare<{
       space.git_status.ref === ref
   )
 
-  await Promise.all(
-    matchList.map((space) =>
-      octokit.rest.codespaces.deleteForAuthenticatedUser({
-        codespace_name: space.name
-      })
-    )
+  const result = matchList.map((space) =>
+    octokit.rest.codespaces.deleteForAuthenticatedUser({
+      codespace_name: space.name
+    })
   )
+
+  await Promise.all(result)
 
   return new Response(`${matchList.length} codespaces closed successful`, {
     status: 200
