@@ -22,4 +22,4 @@ Required UAT by GitHub REST API limitation.
 
 | KEY          | Description                             |
 | ------------ | --------------------------------------- |
-| `GITHUB_UAT` | User Access Token (codespace,write:org) |
+| `GITHUB_UAT` | User Access Token (codespace,admin:org) |
