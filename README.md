@@ -12,7 +12,7 @@
 
 [![github-app](https://img.shields.io/badge/GitHub_App-Codespace_Closer-midnightblue)](https://github.com/apps/codespace-closer) [![octoflare](https://img.shields.io/badge/framework-🌤️Octoflare-dodgerblue)](https://github.com/jill64/octoflare)
 
-Delete Codespace when branch deleted
+🖥️ Delete Codespace when branch deleted
 
 <!----- END GHOST DOCS HEADER ----->
 
