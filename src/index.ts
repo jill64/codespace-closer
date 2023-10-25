@@ -5,7 +5,7 @@ export default octoflare<{
   GITHUB_UAT: string
 }>(async ({ env, payload }) => {
   if (!('ref_type' in payload && payload.ref_type === 'branch')) {
-    return new Response('No Branch Deleted Event', {
+    return new Response('No branch deleted event.', {
       status: 200
     })
   }
@@ -16,15 +16,9 @@ export default octoflare<{
 
   const { repository, ref } = payload
 
-  const isOrg = repository.owner.type === 'Organization'
-
   const {
     data: { codespaces }
-  } = await (isOrg
-    ? octokit.rest.codespaces.listInOrganization({
-        org: repository.owner.login
-      })
-    : octokit.rest.codespaces.listForAuthenticatedUser())
+  } = await octokit.rest.codespaces.listForAuthenticatedUser()
 
   const matchList = codespaces.filter(
     (space) =>
@@ -33,20 +27,16 @@ export default octoflare<{
   )
 
   const result = matchList.map((space) =>
-    isOrg
-      ? octokit.rest.codespaces.deleteFromOrganization({
-          org: repository.owner.login,
-          username: space.owner.login,
-          codespace_name: space.name
-        })
-      : octokit.rest.codespaces.deleteForAuthenticatedUser({
-          codespace_name: space.name
-        })
+    octokit.rest.codespaces.deleteForAuthenticatedUser({
+      codespace_name: space.name
+    })
   )
 
   await Promise.all(result)
 
-  return new Response(`${matchList.length} codespaces closed successful`, {
+  const message = `${matchList.length} codespaces closed successful.`
+
+  return new Response(message, {
     status: 200
   })
 })
