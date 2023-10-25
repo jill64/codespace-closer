@@ -33,9 +33,15 @@ export default octoflare<{
   )
 
   const result = matchList.map((space) =>
-    octokit.rest.codespaces.deleteForAuthenticatedUser({
-      codespace_name: space.name
-    })
+    isOrg
+      ? octokit.rest.codespaces.deleteFromOrganization({
+          org: repository.owner.login,
+          username: space.owner.login,
+          codespace_name: space.name
+        })
+      : octokit.rest.codespaces.deleteForAuthenticatedUser({
+          codespace_name: space.name
+        })
   )
 
   await Promise.all(result)
