@@ -8,9 +8,9 @@
 
 <!----- BEGIN GHOST DOCS HEADER ----->
 
-# Codespace Closer
+# codespace-closer
 
-[![github-app](https://img.shields.io/badge/GitHub_App-Codespace_Closer-midnightblue)](https://github.com/apps/codespace-closer) [![octoflare](https://img.shields.io/badge/framework-🌤️Octoflare-dodgerblue)](https://github.com/jill64/octoflare)
+<!----- BEGIN GHOST DOCS BADGES -----><a href="https://github.com/apps/codespace-closer"><img src="https://img.shields.io/website?up_message=working&down_message=down&url=https%3A%2F%2Fgithub.com%2Fapps%2Fcodespace-closer" alt="website" /></a><!----- END GHOST DOCS BADGES ----->
 
 🖥️ Delete codespaces on branch deleted
 
