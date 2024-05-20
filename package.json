@@ -7,8 +7,8 @@
     "format": "npx prettier --write ."
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "7.9.0",
-    "@typescript-eslint/parser": "7.9.0",
+    "@typescript-eslint/eslint-plugin": "7.10.0",
+    "@typescript-eslint/parser": "7.10.0",
     "eslint-plugin-deprecation": "2.0.0",
     "octoflare": "0.24.36",
     "typescript": "5.4.5"
