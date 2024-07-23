@@ -11,6 +11,6 @@
     "@typescript-eslint/parser": "7.17.0",
     "eslint-plugin-deprecation": "3.0.0",
     "octoflare": "0.25.3",
-    "typescript": "5.5.3"
+    "typescript": "5.5.4"
   }
 }
