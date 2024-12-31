@@ -10,7 +10,7 @@
     "@typescript-eslint/eslint-plugin": "8.19.0",
     "@typescript-eslint/parser": "8.19.0",
     "eslint-plugin-deprecation": "3.0.0",
-    "octoflare": "0.25.25",
+    "octoflare": "0.26.2",
     "typescript": "5.7.2"
   }
 }
